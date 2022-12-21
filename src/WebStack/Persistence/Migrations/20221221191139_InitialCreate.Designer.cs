@@ -12,7 +12,7 @@ using WebStack.Persistence;
 namespace WebStack.Persistence.Migrations
 {
     [DbContext(typeof(WebStackDbContext))]
-    [Migration("20221219185004_InitialCreate")]
+    [Migration("20221221191139_InitialCreate")]
     partial class InitialCreate
     {
         /// <inheritdoc />
