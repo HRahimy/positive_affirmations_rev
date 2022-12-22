@@ -15,6 +15,13 @@ public static class ConfigureServices
 {
     public static IServiceCollection AddInfrastructureServices(this IServiceCollection services, IConfiguration configuration)
     {
+        // Addressing issue with Npgsql database driver throwing error when using
+        // DateTime with Kind=Local as described here:
+        // https://github.com/skoruba/IdentityServer4.Admin/issues/963
+        AppContext.SetSwitch("Npgsql.EnableLegacyTimestampBehavior", true);
+        AppContext.SetSwitch("Npgsql.DisableDateTimeInfinityConversions", true);
+        ///////////////////////////////////////////////////////////////////////////
+
         services.AddScoped<AuditableEntitySaveChangesInterceptor>();
 
         if (configuration.GetValue<bool>("UseInMemoryDatabase"))

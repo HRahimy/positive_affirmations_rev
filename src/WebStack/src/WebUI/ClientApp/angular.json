@@ -131,5 +131,8 @@
       }
     }
   },
-  "defaultProject": "WebStack.WebUI"
+  "defaultProject": "WebStack.WebUI",
+  "cli": {
+    "analytics": "85e3f779-ba10-4f83-9046-3c5342034d23"
+  }
 }
