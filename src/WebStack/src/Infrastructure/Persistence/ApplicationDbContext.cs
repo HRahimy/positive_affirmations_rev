@@ -1,13 +1,14 @@
 ﻿using System.Reflection;
-using WebStack.Application.Common.Interfaces;
-using WebStack.Domain.Entities;
-using WebStack.Infrastructure.Identity;
-using WebStack.Infrastructure.Persistence.Interceptors;
 using Duende.IdentityServer.EntityFramework.Options;
 using MediatR;
 using Microsoft.AspNetCore.ApiAuthorization.IdentityServer;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Options;
+using WebStack.Application.Common.Interfaces;
+using WebStack.Domain.Entities;
+using WebStack.Infrastructure.Common;
+using WebStack.Infrastructure.Identity;
+using WebStack.Infrastructure.Persistence.Interceptors;
 
 namespace WebStack.Infrastructure.Persistence;
 
@@ -20,7 +21,7 @@ public class ApplicationDbContext : ApiAuthorizationDbContext<ApplicationUser>, 
         DbContextOptions<ApplicationDbContext> options,
         IOptions<OperationalStoreOptions> operationalStoreOptions,
         IMediator mediator,
-        AuditableEntitySaveChangesInterceptor auditableEntitySaveChangesInterceptor) 
+        AuditableEntitySaveChangesInterceptor auditableEntitySaveChangesInterceptor)
         : base(options, operationalStoreOptions)
     {
         _mediator = mediator;
@@ -36,11 +37,42 @@ public class ApplicationDbContext : ApiAuthorizationDbContext<ApplicationUser>, 
         builder.ApplyConfigurationsFromAssembly(Assembly.GetExecutingAssembly());
 
         base.OnModelCreating(builder);
+
+        // Addressing issue with SnakeCaseNamingConvention not applying to Identity
+        // tables as specified here:
+        // https://github.com/efcore/EFCore.NamingConventions/issues/2#issuecomment-575306675
+        // Below solution identified and adapted from:
+        // https://andrewlock.net/customising-asp-net-core-identity-ef-core-naming-conventions-for-postgresql/
+        foreach (var entity in builder.Model.GetEntityTypes())
+        {
+            entity.SetTableName(entity.GetTableName().ToSnakeCase());
+
+            foreach (var property in entity.GetProperties())
+            {
+                property.SetColumnName(property.GetColumnName().ToSnakeCase());
+            }
+
+            foreach (var key in entity.GetKeys())
+            {
+                key.SetName(key.GetName().ToSnakeCase());
+            }
+
+            foreach (var key in entity.GetForeignKeys())
+            {
+                key.SetConstraintName(key.GetConstraintName().ToSnakeCase());
+            }
+
+            foreach (var key in entity.GetIndexes())
+            {
+                key.SetDatabaseName(key.GetDatabaseName().ToSnakeCase());
+            }
+        }
     }
 
     protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
     {
         optionsBuilder.AddInterceptors(_auditableEntitySaveChangesInterceptor);
+        optionsBuilder.UseSnakeCaseNamingConvention();
     }
 
     public override async Task<int> SaveChangesAsync(CancellationToken cancellationToken = default)

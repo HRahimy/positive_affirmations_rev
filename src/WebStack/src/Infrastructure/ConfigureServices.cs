@@ -1,13 +1,13 @@
-﻿using WebStack.Application.Common.Interfaces;
+﻿using Microsoft.AspNetCore.Authentication;
+using Microsoft.AspNetCore.Identity;
+using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Configuration;
+using WebStack.Application.Common.Interfaces;
 using WebStack.Infrastructure.Files;
 using WebStack.Infrastructure.Identity;
 using WebStack.Infrastructure.Persistence;
 using WebStack.Infrastructure.Persistence.Interceptors;
 using WebStack.Infrastructure.Services;
-using Microsoft.AspNetCore.Authentication;
-using Microsoft.AspNetCore.Identity;
-using Microsoft.EntityFrameworkCore;
-using Microsoft.Extensions.Configuration;
 
 namespace Microsoft.Extensions.DependencyInjection;
 
@@ -25,8 +25,11 @@ public static class ConfigureServices
         else
         {
             services.AddDbContext<ApplicationDbContext>(options =>
-                options.UseSqlServer(configuration.GetConnectionString("DefaultConnection"),
-                    builder => builder.MigrationsAssembly(typeof(ApplicationDbContext).Assembly.FullName)));
+            {
+                options.UseNpgsql(configuration.GetConnectionString("DefaultConnection"),
+                    builder => builder.MigrationsAssembly(typeof(ApplicationDbContext).Assembly.FullName));
+                options.UseSnakeCaseNamingConvention();
+            });
         }
 
         services.AddScoped<IApplicationDbContext>(provider => provider.GetRequiredService<ApplicationDbContext>());
