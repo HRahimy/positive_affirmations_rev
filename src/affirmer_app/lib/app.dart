@@ -1,3 +1,4 @@
+import 'package:affirmer_app/named_routes.dart';
 import 'package:flutter/material.dart';
 
 import 'login/widgets/login_screen.dart';
@@ -12,7 +13,8 @@ class App extends StatelessWidget {
       theme: ThemeData(
         primarySwatch: Colors.blue,
       ),
-      home: const LoginScreen(),
+      initialRoute: LoginScreen.routeName,
+      routes: namedRoutes(context),
     );
   }
 }
