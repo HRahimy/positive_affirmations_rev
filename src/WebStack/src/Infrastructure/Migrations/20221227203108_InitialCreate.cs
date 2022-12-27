@@ -4,7 +4,7 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 
 #nullable disable
 
-namespace WebStack.Infrastructure.Persistence.Migrations
+namespace WebStack.Infrastructure.Migrations
 {
     /// <inheritdoc />
     public partial class InitialCreate : Migration
@@ -61,8 +61,8 @@ namespace WebStack.Infrastructure.Persistence.Migrations
                     sessionid = table.Column<string>(name: "session_id", type: "character varying(100)", maxLength: 100, nullable: true),
                     clientid = table.Column<string>(name: "client_id", type: "character varying(200)", maxLength: 200, nullable: false),
                     description = table.Column<string>(type: "character varying(200)", maxLength: 200, nullable: true),
-                    creationtime = table.Column<DateTime>(name: "creation_time", type: "timestamp with time zone", nullable: false),
-                    expiration = table.Column<DateTime>(type: "timestamp with time zone", nullable: false),
+                    creationtime = table.Column<DateTime>(name: "creation_time", type: "timestamp without time zone", nullable: false),
+                    expiration = table.Column<DateTime>(type: "timestamp without time zone", nullable: false),
                     data = table.Column<string>(type: "character varying(50000)", maxLength: 50000, nullable: false)
                 },
                 constraints: table =>
@@ -76,7 +76,7 @@ namespace WebStack.Infrastructure.Persistence.Migrations
                 {
                     id = table.Column<string>(type: "text", nullable: false),
                     version = table.Column<int>(type: "integer", nullable: false),
-                    created = table.Column<DateTime>(type: "timestamp with time zone", nullable: false),
+                    created = table.Column<DateTime>(type: "timestamp without time zone", nullable: false),
                     use = table.Column<string>(type: "text", nullable: true),
                     algorithm = table.Column<string>(type: "character varying(100)", maxLength: 100, nullable: false),
                     isx509certificate = table.Column<bool>(name: "is_x509certificate", type: "boolean", nullable: false),
@@ -98,9 +98,9 @@ namespace WebStack.Infrastructure.Persistence.Migrations
                     sessionid = table.Column<string>(name: "session_id", type: "character varying(100)", maxLength: 100, nullable: true),
                     clientid = table.Column<string>(name: "client_id", type: "character varying(200)", maxLength: 200, nullable: false),
                     description = table.Column<string>(type: "character varying(200)", maxLength: 200, nullable: true),
-                    creationtime = table.Column<DateTime>(name: "creation_time", type: "timestamp with time zone", nullable: false),
-                    expiration = table.Column<DateTime>(type: "timestamp with time zone", nullable: true),
-                    consumedtime = table.Column<DateTime>(name: "consumed_time", type: "timestamp with time zone", nullable: true),
+                    creationtime = table.Column<DateTime>(name: "creation_time", type: "timestamp without time zone", nullable: false),
+                    expiration = table.Column<DateTime>(type: "timestamp without time zone", nullable: true),
+                    consumedtime = table.Column<DateTime>(name: "consumed_time", type: "timestamp without time zone", nullable: true),
                     data = table.Column<string>(type: "character varying(50000)", maxLength: 50000, nullable: false)
                 },
                 constraints: table =>
@@ -116,9 +116,9 @@ namespace WebStack.Infrastructure.Persistence.Migrations
                         .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
                     title = table.Column<string>(type: "character varying(200)", maxLength: 200, nullable: false),
                     colourcode = table.Column<string>(name: "colour_code", type: "text", nullable: false),
-                    created = table.Column<DateTime>(type: "timestamp with time zone", nullable: false),
+                    created = table.Column<DateTime>(type: "timestamp without time zone", nullable: false),
                     createdby = table.Column<string>(name: "created_by", type: "text", nullable: true),
-                    lastmodified = table.Column<DateTime>(name: "last_modified", type: "timestamp with time zone", nullable: true),
+                    lastmodified = table.Column<DateTime>(name: "last_modified", type: "timestamp without time zone", nullable: true),
                     lastmodifiedby = table.Column<string>(name: "last_modified_by", type: "text", nullable: true)
                 },
                 constraints: table =>
@@ -242,11 +242,11 @@ namespace WebStack.Infrastructure.Persistence.Migrations
                     title = table.Column<string>(type: "character varying(200)", maxLength: 200, nullable: false),
                     note = table.Column<string>(type: "text", nullable: true),
                     priority = table.Column<int>(type: "integer", nullable: false),
-                    reminder = table.Column<DateTime>(type: "timestamp with time zone", nullable: true),
+                    reminder = table.Column<DateTime>(type: "timestamp without time zone", nullable: true),
                     done = table.Column<bool>(type: "boolean", nullable: false),
-                    created = table.Column<DateTime>(type: "timestamp with time zone", nullable: false),
+                    created = table.Column<DateTime>(type: "timestamp without time zone", nullable: false),
                     createdby = table.Column<string>(name: "created_by", type: "text", nullable: true),
-                    lastmodified = table.Column<DateTime>(name: "last_modified", type: "timestamp with time zone", nullable: true),
+                    lastmodified = table.Column<DateTime>(name: "last_modified", type: "timestamp without time zone", nullable: true),
                     lastmodifiedby = table.Column<string>(name: "last_modified_by", type: "text", nullable: true)
                 },
                 constraints: table =>

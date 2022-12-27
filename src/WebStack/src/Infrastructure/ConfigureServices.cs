@@ -49,7 +49,9 @@ public static class ConfigureServices
             .AddEntityFrameworkStores<ApplicationDbContext>();
 
         services.AddIdentityServer()
-            .AddApiAuthorization<ApplicationUser, ApplicationDbContext>();
+            .AddApiAuthorization<ApplicationUser, ApplicationDbContext>()
+            .AddInMemoryApiResources(IdentityConfiguration.GetApiResources())
+            .AddInMemoryClients(IdentityConfiguration.GetClients());
 
         services.AddTransient<IDateTime, DateTimeService>();
         services.AddTransient<IIdentityService, IdentityService>();

@@ -9,10 +9,10 @@ using WebStack.Infrastructure.Persistence;
 
 #nullable disable
 
-namespace WebStack.Infrastructure.Persistence.Migrations
+namespace WebStack.Infrastructure.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20221222182351_InitialCreate")]
+    [Migration("20221227203108_InitialCreate")]
     partial class InitialCreate
     {
         /// <inheritdoc />
@@ -39,7 +39,7 @@ namespace WebStack.Infrastructure.Persistence.Migrations
                         .HasColumnName("client_id");
 
                     b.Property<DateTime>("CreationTime")
-                        .HasColumnType("timestamp with time zone")
+                        .HasColumnType("timestamp without time zone")
                         .HasColumnName("creation_time");
 
                     b.Property<string>("Data")
@@ -61,7 +61,7 @@ namespace WebStack.Infrastructure.Persistence.Migrations
 
                     b.Property<DateTime?>("Expiration")
                         .IsRequired()
-                        .HasColumnType("timestamp with time zone")
+                        .HasColumnType("timestamp without time zone")
                         .HasColumnName("expiration");
 
                     b.Property<string>("SessionId")
@@ -100,7 +100,7 @@ namespace WebStack.Infrastructure.Persistence.Migrations
                         .HasColumnName("algorithm");
 
                     b.Property<DateTime>("Created")
-                        .HasColumnType("timestamp with time zone")
+                        .HasColumnType("timestamp without time zone")
                         .HasColumnName("created");
 
                     b.Property<string>("Data")
@@ -147,11 +147,11 @@ namespace WebStack.Infrastructure.Persistence.Migrations
                         .HasColumnName("client_id");
 
                     b.Property<DateTime?>("ConsumedTime")
-                        .HasColumnType("timestamp with time zone")
+                        .HasColumnType("timestamp without time zone")
                         .HasColumnName("consumed_time");
 
                     b.Property<DateTime>("CreationTime")
-                        .HasColumnType("timestamp with time zone")
+                        .HasColumnType("timestamp without time zone")
                         .HasColumnName("creation_time");
 
                     b.Property<string>("Data")
@@ -166,7 +166,7 @@ namespace WebStack.Infrastructure.Persistence.Migrations
                         .HasColumnName("description");
 
                     b.Property<DateTime?>("Expiration")
-                        .HasColumnType("timestamp with time zone")
+                        .HasColumnType("timestamp without time zone")
                         .HasColumnName("expiration");
 
                     b.Property<string>("SessionId")
@@ -381,7 +381,7 @@ namespace WebStack.Infrastructure.Persistence.Migrations
                     NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
 
                     b.Property<DateTime>("Created")
-                        .HasColumnType("timestamp with time zone")
+                        .HasColumnType("timestamp without time zone")
                         .HasColumnName("created");
 
                     b.Property<string>("CreatedBy")
@@ -393,7 +393,7 @@ namespace WebStack.Infrastructure.Persistence.Migrations
                         .HasColumnName("done");
 
                     b.Property<DateTime?>("LastModified")
-                        .HasColumnType("timestamp with time zone")
+                        .HasColumnType("timestamp without time zone")
                         .HasColumnName("last_modified");
 
                     b.Property<string>("LastModifiedBy")
@@ -413,7 +413,7 @@ namespace WebStack.Infrastructure.Persistence.Migrations
                         .HasColumnName("priority");
 
                     b.Property<DateTime?>("Reminder")
-                        .HasColumnType("timestamp with time zone")
+                        .HasColumnType("timestamp without time zone")
                         .HasColumnName("reminder");
 
                     b.Property<string>("Title")
@@ -441,7 +441,7 @@ namespace WebStack.Infrastructure.Persistence.Migrations
                     NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
 
                     b.Property<DateTime>("Created")
-                        .HasColumnType("timestamp with time zone")
+                        .HasColumnType("timestamp without time zone")
                         .HasColumnName("created");
 
                     b.Property<string>("CreatedBy")
@@ -449,7 +449,7 @@ namespace WebStack.Infrastructure.Persistence.Migrations
                         .HasColumnName("created_by");
 
                     b.Property<DateTime?>("LastModified")
-                        .HasColumnType("timestamp with time zone")
+                        .HasColumnType("timestamp without time zone")
                         .HasColumnName("last_modified");
 
                     b.Property<string>("LastModifiedBy")
