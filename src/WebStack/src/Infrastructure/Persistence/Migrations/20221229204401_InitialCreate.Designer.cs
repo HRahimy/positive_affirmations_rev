@@ -9,10 +9,10 @@ using WebStack.Infrastructure.Persistence;
 
 #nullable disable
 
-namespace WebStack.Infrastructure.Migrations
+namespace WebStack.Infrastructure.Persistence.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20221227203108_InitialCreate")]
+    [Migration("20221229204401_InitialCreate")]
     partial class InitialCreate
     {
         /// <inheritdoc />

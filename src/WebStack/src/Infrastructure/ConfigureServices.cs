@@ -50,8 +50,14 @@ public static class ConfigureServices
 
         services.AddIdentityServer()
             .AddApiAuthorization<ApplicationUser, ApplicationDbContext>()
-            .AddInMemoryApiResources(IdentityConfiguration.GetApiResources())
-            .AddInMemoryClients(IdentityConfiguration.GetClients());
+            .AddConfigurationStore<IdentityConfigurationDbContext>(options =>
+            {
+                options.DefaultSchema = "identity_config";
+                options.ConfigureDbContext = builder =>
+                builder.UseNpgsql(configuration.GetConnectionString("DefaultConnection"),
+                        sql => sql.MigrationsAssembly(typeof(IdentityConfigurationDbContext).Assembly.FullName)
+                        .MigrationsHistoryTable("__EFMigrationsHistory", "identity_config"));
+            });
 
         services.AddTransient<IDateTime, DateTimeService>();
         services.AddTransient<IIdentityService, IdentityService>();

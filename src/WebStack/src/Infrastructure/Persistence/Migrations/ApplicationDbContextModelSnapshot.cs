@@ -8,7 +8,7 @@ using WebStack.Infrastructure.Persistence;
 
 #nullable disable
 
-namespace WebStack.Infrastructure.Migrations
+namespace WebStack.Infrastructure.Persistence.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
     partial class ApplicationDbContextModelSnapshot : ModelSnapshot

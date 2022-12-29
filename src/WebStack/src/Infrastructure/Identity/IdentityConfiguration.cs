@@ -17,19 +17,19 @@ public static class IdentityConfiguration
                 ClientId = "flutter",
                 AllowedGrantTypes = GrantTypes.Code,
                 RequirePkce = true,
+                AllowOfflineAccess = true,
                 RequireClientSecret = false,
 
-                RedirectUris = {"http://localhost:4000/"},
-                AllowedCorsOrigins = {"http://localhost:4000"},
+                RedirectUris = { "com.affirmer.app://callback" },
+                PostLogoutRedirectUris = { "com.affirmer.app://callback" },
 
                 AllowedScopes =
                 {
                     IdentityServerConstants.StandardScopes.OpenId,
+                    IdentityServerConstants.StandardScopes.Profile,
+                    IdentityServerConstants.StandardScopes.OfflineAccess,
                     "TodoApi"
                 },
-
-                AllowAccessTokensViaBrowser = true,
-                RequireConsent = false
             }
         };
 }
