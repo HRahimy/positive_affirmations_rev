@@ -454,6 +454,10 @@ namespace WebStack.Infrastructure.Persistence.Migrations.IdentityConfigurationDb
                         .HasColumnType("integer")
                         .HasColumnName("consent_lifetime");
 
+                    b.Property<bool?>("CoordinateLifetimeWithUserSession")
+                        .HasColumnType("boolean")
+                        .HasColumnName("coordinate_lifetime_with_user_session");
+
                     b.Property<DateTime>("Created")
                         .HasColumnType("timestamp without time zone")
                         .HasColumnName("created");

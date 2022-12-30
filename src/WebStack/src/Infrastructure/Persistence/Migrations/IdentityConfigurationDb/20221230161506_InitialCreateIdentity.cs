@@ -111,6 +111,7 @@ namespace WebStack.Infrastructure.Persistence.Migrations.IdentityConfigurationDb
                     devicecodelifetime = table.Column<int>(name: "device_code_lifetime", type: "integer", nullable: false),
                     cibalifetime = table.Column<int>(name: "ciba_lifetime", type: "integer", nullable: true),
                     pollinginterval = table.Column<int>(name: "polling_interval", type: "integer", nullable: true),
+                    coordinatelifetimewithusersession = table.Column<bool>(name: "coordinate_lifetime_with_user_session", type: "boolean", nullable: true),
                     created = table.Column<DateTime>(type: "timestamp without time zone", nullable: false),
                     updated = table.Column<DateTime>(type: "timestamp without time zone", nullable: true),
                     lastaccessed = table.Column<DateTime>(name: "last_accessed", type: "timestamp without time zone", nullable: true),

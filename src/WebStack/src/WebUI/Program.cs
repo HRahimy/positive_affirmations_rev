@@ -1,3 +1,4 @@
+using WebStack.Infrastructure.Identity;
 using WebStack.Infrastructure.Persistence;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -20,6 +21,10 @@ if (app.Environment.IsDevelopment())
         var initialiser = scope.ServiceProvider.GetRequiredService<ApplicationDbContextInitialiser>();
         await initialiser.InitialiseAsync();
         await initialiser.SeedAsync();
+
+        var identityConfigInitialiser = scope.ServiceProvider.GetRequiredService<IdentityConfigurationDbContextInitialiser>();
+        await identityConfigInitialiser.InitialiseAsync();
+        await identityConfigInitialiser.SeedAsync();
     }
 }
 else

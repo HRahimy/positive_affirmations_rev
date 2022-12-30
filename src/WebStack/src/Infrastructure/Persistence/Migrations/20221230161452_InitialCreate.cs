@@ -92,7 +92,9 @@ namespace WebStack.Infrastructure.Persistence.Migrations
                 name: "persisted_grants",
                 columns: table => new
                 {
-                    key = table.Column<string>(type: "character varying(200)", maxLength: 200, nullable: false),
+                    id = table.Column<long>(type: "bigint", nullable: false)
+                        .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
+                    key = table.Column<string>(type: "character varying(200)", maxLength: 200, nullable: true),
                     type = table.Column<string>(type: "character varying(50)", maxLength: 50, nullable: false),
                     subjectid = table.Column<string>(name: "subject_id", type: "character varying(200)", maxLength: 200, nullable: true),
                     sessionid = table.Column<string>(name: "session_id", type: "character varying(100)", maxLength: 100, nullable: true),
@@ -105,7 +107,28 @@ namespace WebStack.Infrastructure.Persistence.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("pk_persisted_grants", x => x.key);
+                    table.PrimaryKey("pk_persisted_grants", x => x.id);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "server_side_sessions",
+                columns: table => new
+                {
+                    id = table.Column<int>(type: "integer", nullable: false)
+                        .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
+                    key = table.Column<string>(type: "character varying(100)", maxLength: 100, nullable: false),
+                    scheme = table.Column<string>(type: "character varying(100)", maxLength: 100, nullable: false),
+                    subjectid = table.Column<string>(name: "subject_id", type: "character varying(100)", maxLength: 100, nullable: false),
+                    sessionid = table.Column<string>(name: "session_id", type: "character varying(100)", maxLength: 100, nullable: true),
+                    displayname = table.Column<string>(name: "display_name", type: "character varying(100)", maxLength: 100, nullable: true),
+                    created = table.Column<DateTime>(type: "timestamp without time zone", nullable: false),
+                    renewed = table.Column<DateTime>(type: "timestamp without time zone", nullable: false),
+                    expires = table.Column<DateTime>(type: "timestamp without time zone", nullable: true),
+                    data = table.Column<string>(type: "text", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("pk_server_side_sessions", x => x.id);
                 });
 
             migrationBuilder.CreateTable(
@@ -324,6 +347,12 @@ namespace WebStack.Infrastructure.Persistence.Migrations
                 column: "expiration");
 
             migrationBuilder.CreateIndex(
+                name: "ix_persisted_grants_key",
+                table: "persisted_grants",
+                column: "key",
+                unique: true);
+
+            migrationBuilder.CreateIndex(
                 name: "ix_persisted_grants_subject_id_client_id_type",
                 table: "persisted_grants",
                 columns: new[] { "subject_id", "client_id", "type" });
@@ -332,6 +361,32 @@ namespace WebStack.Infrastructure.Persistence.Migrations
                 name: "ix_persisted_grants_subject_id_session_id_type",
                 table: "persisted_grants",
                 columns: new[] { "subject_id", "session_id", "type" });
+
+            migrationBuilder.CreateIndex(
+                name: "ix_server_side_sessions_display_name",
+                table: "server_side_sessions",
+                column: "display_name");
+
+            migrationBuilder.CreateIndex(
+                name: "ix_server_side_sessions_expires",
+                table: "server_side_sessions",
+                column: "expires");
+
+            migrationBuilder.CreateIndex(
+                name: "ix_server_side_sessions_key",
+                table: "server_side_sessions",
+                column: "key",
+                unique: true);
+
+            migrationBuilder.CreateIndex(
+                name: "ix_server_side_sessions_session_id",
+                table: "server_side_sessions",
+                column: "session_id");
+
+            migrationBuilder.CreateIndex(
+                name: "ix_server_side_sessions_subject_id",
+                table: "server_side_sessions",
+                column: "subject_id");
 
             migrationBuilder.CreateIndex(
                 name: "ix_todo_items_list_id",
@@ -365,6 +420,9 @@ namespace WebStack.Infrastructure.Persistence.Migrations
 
             migrationBuilder.DropTable(
                 name: "persisted_grants");
+
+            migrationBuilder.DropTable(
+                name: "server_side_sessions");
 
             migrationBuilder.DropTable(
                 name: "todo_items");

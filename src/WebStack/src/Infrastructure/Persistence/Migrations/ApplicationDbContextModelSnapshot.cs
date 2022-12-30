@@ -132,10 +132,12 @@ namespace WebStack.Infrastructure.Persistence.Migrations
 
             modelBuilder.Entity("Duende.IdentityServer.EntityFramework.Entities.PersistedGrant", b =>
                 {
-                    b.Property<string>("Key")
-                        .HasMaxLength(200)
-                        .HasColumnType("character varying(200)")
-                        .HasColumnName("key");
+                    b.Property<long>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("bigint")
+                        .HasColumnName("id");
+
+                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<long>("Id"));
 
                     b.Property<string>("ClientId")
                         .IsRequired()
@@ -166,6 +168,11 @@ namespace WebStack.Infrastructure.Persistence.Migrations
                         .HasColumnType("timestamp without time zone")
                         .HasColumnName("expiration");
 
+                    b.Property<string>("Key")
+                        .HasMaxLength(200)
+                        .HasColumnType("character varying(200)")
+                        .HasColumnName("key");
+
                     b.Property<string>("SessionId")
                         .HasMaxLength(100)
                         .HasColumnType("character varying(100)")
@@ -182,7 +189,7 @@ namespace WebStack.Infrastructure.Persistence.Migrations
                         .HasColumnType("character varying(50)")
                         .HasColumnName("type");
 
-                    b.HasKey("Key")
+                    b.HasKey("Id")
                         .HasName("pk_persisted_grants");
 
                     b.HasIndex("ConsumedTime")
@@ -191,6 +198,10 @@ namespace WebStack.Infrastructure.Persistence.Migrations
                     b.HasIndex("Expiration")
                         .HasDatabaseName("ix_persisted_grants_expiration");
 
+                    b.HasIndex("Key")
+                        .IsUnique()
+                        .HasDatabaseName("ix_persisted_grants_key");
+
                     b.HasIndex("SubjectId", "ClientId", "Type")
                         .HasDatabaseName("ix_persisted_grants_subject_id_client_id_type");
 
@@ -198,6 +209,82 @@ namespace WebStack.Infrastructure.Persistence.Migrations
                         .HasDatabaseName("ix_persisted_grants_subject_id_session_id_type");
 
                     b.ToTable("persisted_grants", (string)null);
+                });
+
+            modelBuilder.Entity("Duende.IdentityServer.EntityFramework.Entities.ServerSideSession", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("integer")
+                        .HasColumnName("id");
+
+                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
+
+                    b.Property<DateTime>("Created")
+                        .HasColumnType("timestamp without time zone")
+                        .HasColumnName("created");
+
+                    b.Property<string>("Data")
+                        .IsRequired()
+                        .HasColumnType("text")
+                        .HasColumnName("data");
+
+                    b.Property<string>("DisplayName")
+                        .HasMaxLength(100)
+                        .HasColumnType("character varying(100)")
+                        .HasColumnName("display_name");
+
+                    b.Property<DateTime?>("Expires")
+                        .HasColumnType("timestamp without time zone")
+                        .HasColumnName("expires");
+
+                    b.Property<string>("Key")
+                        .IsRequired()
+                        .HasMaxLength(100)
+                        .HasColumnType("character varying(100)")
+                        .HasColumnName("key");
+
+                    b.Property<DateTime>("Renewed")
+                        .HasColumnType("timestamp without time zone")
+                        .HasColumnName("renewed");
+
+                    b.Property<string>("Scheme")
+                        .IsRequired()
+                        .HasMaxLength(100)
+                        .HasColumnType("character varying(100)")
+                        .HasColumnName("scheme");
+
+                    b.Property<string>("SessionId")
+                        .HasMaxLength(100)
+                        .HasColumnType("character varying(100)")
+                        .HasColumnName("session_id");
+
+                    b.Property<string>("SubjectId")
+                        .IsRequired()
+                        .HasMaxLength(100)
+                        .HasColumnType("character varying(100)")
+                        .HasColumnName("subject_id");
+
+                    b.HasKey("Id")
+                        .HasName("pk_server_side_sessions");
+
+                    b.HasIndex("DisplayName")
+                        .HasDatabaseName("ix_server_side_sessions_display_name");
+
+                    b.HasIndex("Expires")
+                        .HasDatabaseName("ix_server_side_sessions_expires");
+
+                    b.HasIndex("Key")
+                        .IsUnique()
+                        .HasDatabaseName("ix_server_side_sessions_key");
+
+                    b.HasIndex("SessionId")
+                        .HasDatabaseName("ix_server_side_sessions_session_id");
+
+                    b.HasIndex("SubjectId")
+                        .HasDatabaseName("ix_server_side_sessions_subject_id");
+
+                    b.ToTable("server_side_sessions", (string)null);
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRole", b =>

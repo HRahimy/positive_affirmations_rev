@@ -12,7 +12,7 @@ using WebStack.Infrastructure.Identity;
 namespace WebStack.Infrastructure.Persistence.Migrations.IdentityConfigurationDb
 {
     [DbContext(typeof(IdentityConfigurationDbContext))]
-    [Migration("20221229204333_InitialCreateIdentity")]
+    [Migration("20221230161506_InitialCreateIdentity")]
     partial class InitialCreateIdentity
     {
         /// <inheritdoc />
@@ -456,6 +456,10 @@ namespace WebStack.Infrastructure.Persistence.Migrations.IdentityConfigurationDb
                     b.Property<int?>("ConsentLifetime")
                         .HasColumnType("integer")
                         .HasColumnName("consent_lifetime");
+
+                    b.Property<bool?>("CoordinateLifetimeWithUserSession")
+                        .HasColumnType("boolean")
+                        .HasColumnName("coordinate_lifetime_with_user_session");
 
                     b.Property<DateTime>("Created")
                         .HasColumnType("timestamp without time zone")

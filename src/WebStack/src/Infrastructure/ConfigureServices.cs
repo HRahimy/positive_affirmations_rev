@@ -59,6 +59,8 @@ public static class ConfigureServices
                         .MigrationsHistoryTable("__EFMigrationsHistory", "identity_config"));
             });
 
+        services.AddScoped<IdentityConfigurationDbContextInitialiser>();
+
         services.AddTransient<IDateTime, DateTimeService>();
         services.AddTransient<IIdentityService, IdentityService>();
         services.AddTransient<ICsvFileBuilder, CsvFileBuilder>();
