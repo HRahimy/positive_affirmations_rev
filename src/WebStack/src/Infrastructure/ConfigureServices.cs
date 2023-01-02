@@ -50,16 +50,22 @@ public static class ConfigureServices
 
         services.AddIdentityServer()
             .AddApiAuthorization<ApplicationUser, ApplicationDbContext>()
-            .AddConfigurationStore<IdentityConfigurationDbContext>(options =>
-            {
-                options.DefaultSchema = "identity_config";
-                options.ConfigureDbContext = builder =>
-                builder.UseNpgsql(configuration.GetConnectionString("DefaultConnection"),
-                        sql => sql.MigrationsAssembly(typeof(IdentityConfigurationDbContext).Assembly.FullName)
-                        .MigrationsHistoryTable("__EFMigrationsHistory", "identity_config"));
-            });
+            .AddInMemoryApiResources(IdentityConfiguration.GetApiResources())
+            .AddInMemoryApiScopes(IdentityConfiguration.GetApiScopes())
+            .AddInMemoryClients(IdentityConfiguration.GetClients());
+        // Due to issues with ApiAuthorization package from microsoft having dependency issues with Duende.IdentityServer,
+        // avoiding using persisted configuration stores using EF Core until issue is resolved on their side.
+        // See notes in ApplicationDbContext file for more details.
+        /*            .AddConfigurationStore<IdentityConfigurationDbContext>(options =>
+                    {
+                        options.DefaultSchema = "identity_config";
+                        options.ConfigureDbContext = builder =>
+                        builder.UseNpgsql(configuration.GetConnectionString("DefaultConnection"),
+                                sql => sql.MigrationsAssembly(typeof(IdentityConfigurationDbContext).Assembly.FullName)
+                                .MigrationsHistoryTable("__EFMigrationsHistory", "identity_config"));
+                    });*/
 
-        services.AddScoped<IdentityConfigurationDbContextInitialiser>();
+        /*services.AddScoped<IdentityConfigurationDbContextInitialiser>();*/
 
         services.AddTransient<IDateTime, DateTimeService>();
         services.AddTransient<IIdentityService, IdentityService>();

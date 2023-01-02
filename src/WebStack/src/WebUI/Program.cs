@@ -22,9 +22,9 @@ if (app.Environment.IsDevelopment())
         await initialiser.InitialiseAsync();
         await initialiser.SeedAsync();
 
-        var identityConfigInitialiser = scope.ServiceProvider.GetRequiredService<IdentityConfigurationDbContextInitialiser>();
+/*        var identityConfigInitialiser = scope.ServiceProvider.GetRequiredService<IdentityConfigurationDbContextInitialiser>();
         await identityConfigInitialiser.InitialiseAsync();
-        await identityConfigInitialiser.SeedAsync();
+        await identityConfigInitialiser.SeedAsync();*/
     }
 }
 else

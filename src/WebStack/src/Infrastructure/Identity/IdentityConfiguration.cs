@@ -7,7 +7,12 @@ public static class IdentityConfiguration
     public static IEnumerable<ApiResource> GetApiResources() =>
         new List<ApiResource>
         {
-            new ApiResource("TodoApi")
+            new ApiResource("Todos")
+        };
+    public static IEnumerable<ApiScope> GetApiScopes() =>
+        new List<ApiScope>
+        {
+            new ApiScope("read:todos")
         };
     public static IEnumerable<Client> GetClients() =>
         new List<Client>
@@ -28,7 +33,7 @@ public static class IdentityConfiguration
                     IdentityServerConstants.StandardScopes.OpenId,
                     IdentityServerConstants.StandardScopes.Profile,
                     IdentityServerConstants.StandardScopes.OfflineAccess,
-                    "TodoApi"
+                    "Todos"
                 },
             }
         };
