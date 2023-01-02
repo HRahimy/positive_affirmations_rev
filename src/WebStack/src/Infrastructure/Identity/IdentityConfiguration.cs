@@ -21,7 +21,6 @@ public static class IdentityConfiguration
             {
                 ClientId = "flutter",
                 AllowedGrantTypes = GrantTypes.Code,
-                RequirePkce = true,
                 AllowOfflineAccess = true,
                 RequireClientSecret = false,
 
@@ -33,7 +32,7 @@ public static class IdentityConfiguration
                     IdentityServerConstants.StandardScopes.OpenId,
                     IdentityServerConstants.StandardScopes.Profile,
                     IdentityServerConstants.StandardScopes.OfflineAccess,
-                    "Todos"
+                    "read:todos"
                 },
             }
         };
