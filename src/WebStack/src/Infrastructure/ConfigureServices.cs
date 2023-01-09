@@ -49,10 +49,10 @@ public static class ConfigureServices
             .AddEntityFrameworkStores<ApplicationDbContext>();
 
         services.AddIdentityServer()
-            .AddApiAuthorization<ApplicationUser, ApplicationDbContext>()
-            .AddInMemoryApiResources(IdentityConfiguration.GetApiResources())
+            .AddApiAuthorization<ApplicationUser, ApplicationDbContext>();
+/*            .AddInMemoryApiResources(IdentityConfiguration.GetApiResources())
             .AddInMemoryApiScopes(IdentityConfiguration.GetApiScopes())
-            .AddInMemoryClients(IdentityConfiguration.GetClients());
+            .AddInMemoryClients(IdentityConfiguration.GetClients());*/
         // Due to issues with ApiAuthorization package from microsoft having dependency issues with Duende.IdentityServer,
         // avoiding using persisted configuration stores using EF Core until issue is resolved on their side.
         // See notes in ApplicationDbContext file for more details.

@@ -1,11 +1,11 @@
-﻿using WebStack.Application.Common.Models;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
+using WebStack.Application.Common.Models;
 using WebStack.Application.TodoItems.Commands.CreateTodoItem;
 using WebStack.Application.TodoItems.Commands.DeleteTodoItem;
 using WebStack.Application.TodoItems.Commands.UpdateTodoItem;
 using WebStack.Application.TodoItems.Commands.UpdateTodoItemDetail;
 using WebStack.Application.TodoItems.Queries.GetTodoItemsWithPagination;
-using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Mvc;
 
 namespace WebStack.WebUI.Controllers;
 
