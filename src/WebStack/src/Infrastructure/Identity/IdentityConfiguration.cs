@@ -21,6 +21,7 @@ public static class IdentityConfiguration
             {
                 ClientId = "flutter",
                 AllowedGrantTypes = GrantTypes.Code,
+                RequirePkce = true,
                 AllowOfflineAccess = true,
                 RequireClientSecret = false,
 
