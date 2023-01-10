@@ -1,4 +1,3 @@
-using WebStack.Infrastructure.Identity;
 using WebStack.Infrastructure.Persistence;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -22,9 +21,9 @@ if (app.Environment.IsDevelopment())
         await initialiser.InitialiseAsync();
         await initialiser.SeedAsync();
 
-/*        var identityConfigInitialiser = scope.ServiceProvider.GetRequiredService<IdentityConfigurationDbContextInitialiser>();
-        await identityConfigInitialiser.InitialiseAsync();
-        await identityConfigInitialiser.SeedAsync();*/
+        /*        var identityConfigInitialiser = scope.ServiceProvider.GetRequiredService<IdentityConfigurationDbContextInitialiser>();
+                await identityConfigInitialiser.InitialiseAsync();
+                await identityConfigInitialiser.SeedAsync();*/
     }
 }
 else
@@ -37,10 +36,12 @@ app.UseHealthChecks("/health");
 app.UseHttpsRedirection();
 app.UseStaticFiles();
 
+app.UseOpenApi();
 app.UseSwaggerUi3(settings =>
 {
     settings.Path = "/api";
-    settings.DocumentPath = "/api/specification.json";
+    // Disabling the `settings.DocumentPath` because it results in swagger UI not being automatically updated.
+    /*settings.DocumentPath = "/api/specifications.json";*/
 });
 
 app.UseRouting();

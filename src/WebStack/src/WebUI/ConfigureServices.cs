@@ -1,11 +1,11 @@
-﻿using WebStack.Application.Common.Interfaces;
-using WebStack.Infrastructure.Persistence;
-using WebStack.WebUI.Filters;
-using WebStack.WebUI.Services;
-using FluentValidation.AspNetCore;
+﻿using FluentValidation.AspNetCore;
 using Microsoft.AspNetCore.Mvc;
 using NSwag;
 using NSwag.Generation.Processors.Security;
+using WebStack.Application.Common.Interfaces;
+using WebStack.Infrastructure.Persistence;
+using WebStack.WebUI.Filters;
+using WebStack.WebUI.Services;
 
 namespace Microsoft.Extensions.DependencyInjection;
 
@@ -32,7 +32,7 @@ public static class ConfigureServices
         services.Configure<ApiBehaviorOptions>(options =>
             options.SuppressModelStateInvalidFilter = true);
 
-        services.AddOpenApiDocument(configure =>
+        services.AddSwaggerDocument(configure =>
         {
             configure.Title = "WebStack API";
             configure.AddSecurity("JWT", Enumerable.Empty<string>(), new OpenApiSecurityScheme
