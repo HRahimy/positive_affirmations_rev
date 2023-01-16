@@ -2,9 +2,15 @@ import 'package:affirmer_app/auth/bloc/auth_cubit.dart';
 import 'package:affirmer_app/common/widgets/common_form_padding.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:repositories/api/affirmer_api.dart';
 
 class AuthScaffold extends StatelessWidget {
-  const AuthScaffold({Key? key}) : super(key: key);
+  AuthScaffold({Key? key})
+      : api = AffirmerApi.create(
+            baseUrl: 'https://25d9-176-42-134-191.eu.ngrok.io/api'),
+        super(key: key);
+
+  final AffirmerApi api;
 
   @override
   Widget build(BuildContext context) {
@@ -12,7 +18,15 @@ class AuthScaffold extends StatelessWidget {
       child: SingleChildScrollView(
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.stretch,
-          children: const [_AuthRedirectButton()],
+          children: [
+            _AuthRedirectButton(),
+            CommonFormPadding(
+              child: ElevatedButton(
+                onPressed: () => api.getAffirmations(),
+                child: const Text('LOG IN/SIGN UP'),
+              ),
+            )
+          ],
         ),
       ),
     );
