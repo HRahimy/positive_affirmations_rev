@@ -1,4 +1,5 @@
 import 'package:dio/dio.dart';
+import 'package:repositories/api/models/affirmation_list_item_dto.dart';
 
 class AffirmerApi {
   final String baseUrl;
@@ -9,15 +10,15 @@ class AffirmerApi {
 
   AffirmerApi.create({required String baseUrl}) : this._(baseUrl: baseUrl);
 
-  void getAffirmations() async {
+  Future<List<AffirmationListItem>> getAffirmations() async {
     try {
       var response = await _dio.request(
         '/affirmations',
         options: Options(method: 'GET')
       );
-      print(response);
+      return [];
     } catch (e) {
-      print(e);
+      return [];
     }
   }
 }

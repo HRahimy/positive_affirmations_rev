@@ -9,6 +9,7 @@ environment:
 
 dependencies:
   dio: ^4.0.6
+  equatable: ^2.0.5
   flutter:
     sdk: flutter
   flutter_appauth: ^4.2.1
