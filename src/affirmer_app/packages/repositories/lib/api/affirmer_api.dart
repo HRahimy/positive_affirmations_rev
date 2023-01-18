@@ -1,5 +1,6 @@
 import 'package:dio/dio.dart';
 import 'package:repositories/api/models/affirmation_list_item_dto.dart';
+import 'package:repositories/api/models/paginated_list.dart';
 
 class AffirmerApi {
   final String baseUrl;
@@ -10,15 +11,24 @@ class AffirmerApi {
 
   AffirmerApi.create({required String baseUrl}) : this._(baseUrl: baseUrl);
 
-  Future<List<AffirmationListItem>> getAffirmations() async {
-    try {
-      var response = await _dio.request(
-        '/affirmations',
-        options: Options(method: 'GET')
-      );
-      return [];
-    } catch (e) {
-      return [];
-    }
+  Future<PaginatedList<AffirmationListItem>> getAffirmations() async {
+    var response =
+        await _dio.request('/affirmations', options: Options(method: 'GET'));
+    print(response);
+
+    final parsedAffirmations = response.data['items'].map((item) {
+      return AffirmationListItem.fromJson(item);
+    }).toList();
+
+    // Solution converting parsed list into a strongly typed list in dart:
+    // https://stackoverflow.com/a/62250584/5472560
+    return PaginatedList<AffirmationListItem>(
+      items: List<AffirmationListItem>.from(parsedAffirmations),
+      pageNumber: response.data['pageNumber'],
+      totalPages: response.data['totalPages'],
+      hasNextPage: response.data['hasNextPage'],
+      hasPreviousPage: response.data['hasPreviousPage'],
+      totalCount: response.data['totalCount'],
+    );
   }
 }

@@ -9,11 +9,9 @@ class AffirmationList extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return BlocProvider(
-      create: (_) =>
-      AffirmationListCubit(
+      create: (_) => AffirmationListCubit(
         api: RepositoryProvider.of<AffirmerApi>(context),
-      )
-        ..loadAffirmations(),
+      )..loadAffirmations(),
       child: _View(),
     );
   }
@@ -26,9 +24,11 @@ class _View extends StatelessWidget {
   Widget build(BuildContext context) {
     return BlocBuilder<AffirmationListCubit, AffirmationListState>(
       builder: (context, state) {
-        return const Center(
+        return Center(
           child: SingleChildScrollView(
-            child: Text('Affirmation list'),
+            child: Column(
+              children: state.affirmations.map((e) => Text(e.title)).toList(),
+            ),
           ),
         );
       },

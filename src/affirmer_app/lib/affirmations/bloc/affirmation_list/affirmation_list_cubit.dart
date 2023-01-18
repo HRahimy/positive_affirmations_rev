@@ -19,7 +19,7 @@ class AffirmationListCubit extends Cubit<AffirmationListState> {
       final affirmations = await _api.getAffirmations();
 
       emit(state.copyWith(
-        affirmations: affirmations,
+        affirmations: affirmations.items,
         page: state.page + 1,
         loadingStatus: FormzStatus.submissionSuccess,
       ));
