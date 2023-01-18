@@ -20,7 +20,7 @@ namespace WebStack.Infrastructure.Persistence.Migrations
                         .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
                     title = table.Column<string>(type: "character varying(200)", maxLength: 200, nullable: false),
                     subtitle = table.Column<string>(type: "text", nullable: true),
-                    active = table.Column<bool>(type: "boolean", nullable: false),
+                    active = table.Column<bool>(type: "boolean", nullable: true, defaultValue: true),
                     created = table.Column<DateTime>(type: "timestamp without time zone", nullable: false),
                     createdby = table.Column<string>(name: "created_by", type: "text", nullable: true),
                     lastmodified = table.Column<DateTime>(name: "last_modified", type: "timestamp without time zone", nullable: true),

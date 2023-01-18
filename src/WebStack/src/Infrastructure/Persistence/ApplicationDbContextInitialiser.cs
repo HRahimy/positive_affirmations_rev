@@ -1,8 +1,8 @@
-﻿using WebStack.Domain.Entities;
-using WebStack.Infrastructure.Identity;
-using Microsoft.AspNetCore.Identity;
+﻿using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
+using WebStack.Domain.Entities;
+using WebStack.Infrastructure.Identity;
 
 namespace WebStack.Infrastructure.Persistence;
 
@@ -66,7 +66,7 @@ public class ApplicationDbContextInitialiser
         if (_userManager.Users.All(u => u.UserName != administrator.UserName))
         {
             await _userManager.CreateAsync(administrator, "Administrator1!");
-            await _userManager.AddToRolesAsync(administrator, new [] { administratorRole.Name });
+            await _userManager.AddToRolesAsync(administrator, new[] { administratorRole.Name });
         }
 
         // Default data
@@ -83,6 +83,31 @@ public class ApplicationDbContextInitialiser
                     new TodoItem { Title = "Realise you've already done two things on the list! 🤯"},
                     new TodoItem { Title = "Reward yourself with a nice, long nap 🏆" },
                 }
+            });
+
+            await _context.SaveChangesAsync();
+        }
+
+        // Affirmations for debugging / testing
+        if (!_context.Affirmations.Any())
+        {
+            _context.Affirmations.Add(new Affirmation
+            {
+                Title = "First Affirmation",
+                Subtitle = "First affirmation subtitle",
+                Active = true,
+            });
+            _context.Affirmations.Add(new Affirmation
+            {
+                Title = "Second Affirmation",
+                Subtitle = "Second affirmation subtitle",
+                Active = true,
+            });
+            _context.Affirmations.Add(new Affirmation
+            {
+                Title = "Third Affirmation",
+                Subtitle = "Third affirmation subtitle",
+                Active = true,
             });
 
             await _context.SaveChangesAsync();

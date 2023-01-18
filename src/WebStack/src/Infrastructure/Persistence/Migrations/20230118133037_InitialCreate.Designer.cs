@@ -12,7 +12,7 @@ using WebStack.Infrastructure.Persistence;
 namespace WebStack.Infrastructure.Persistence.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20230109152104_InitialCreate")]
+    [Migration("20230118133037_InitialCreate")]
     partial class InitialCreate
     {
         /// <inheritdoc />
@@ -380,8 +380,10 @@ namespace WebStack.Infrastructure.Persistence.Migrations
 
                     NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
 
-                    b.Property<bool>("Active")
+                    b.Property<bool?>("Active")
+                        .ValueGeneratedOnAdd()
                         .HasColumnType("boolean")
+                        .HasDefaultValue(true)
                         .HasColumnName("active");
 
                     b.Property<DateTime>("Created")

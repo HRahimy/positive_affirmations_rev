@@ -377,8 +377,10 @@ namespace WebStack.Infrastructure.Persistence.Migrations
 
                     NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
 
-                    b.Property<bool>("Active")
+                    b.Property<bool?>("Active")
+                        .ValueGeneratedOnAdd()
                         .HasColumnType("boolean")
+                        .HasDefaultValue(true)
                         .HasColumnName("active");
 
                     b.Property<DateTime>("Created")

@@ -10,5 +10,8 @@ public class AffirmationConfiguration : IEntityTypeConfiguration<Affirmation>
         builder.Property(t => t.Title)
             .HasMaxLength(200)
             .IsRequired();
+
+        builder.Property(t => t.Active)
+            .HasDefaultValue(true);
     }
 }
